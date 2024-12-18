@@ -15,6 +15,9 @@ import myappsicon from '../assets/myappsicon.png';
 import chaticon from '../assets/chaticon.png';
 import Notificationicon from '../assets/notificationicon.png';
 import paymenticon from '../assets/paymenticon.png';
+import appointmenticon from '../assets/appointmenticon.png';
+import configicon from '../assets/configicon.png';
+
 //Pages
 import ProfilePage from '../components/Proflie/ProfilePage';
 import BillingPage from '../components/Proflie/BillingPage';
@@ -80,10 +83,12 @@ const Sidebar = ({ activePage, setActivePage }) => (
         >
             {[
                 { text: 'My Profile', icon: myprofileicon, page: 'profile' },
-                { text: 'My Apps', icon: myappsicon, page: 'apps' },
+                // { text: 'My Apps', icon: myappsicon, page: 'apps' },
                 { text: 'Consultation', icon: chaticon, page: 'consultation' },
-                { text: 'Notification', icon: Notificationicon, page: 'notification' },
-                { text: 'Billing and payments', icon: paymenticon, page: 'billing' },
+                // { text: 'Notification', icon: Notificationicon, page: 'notification' },
+                // { text: 'Billing and payments', icon: paymenticon, page: 'billing' },
+                // { text: 'Appointment', icon: appointmenticon, page: 'billing' },
+                // { text: 'Config Plan', icon: configicon, page: 'billing' },
             ].map((item) => (
                 <ListItem
                     key={item.text}
