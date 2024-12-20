@@ -116,13 +116,13 @@ const IconButton = ({ icon }) => {
 const solutionsItems = [
   {
     id: 1,
-    title: 'CTMS',
+    title: 'CTMD',
     link: '/company'
   
   },
   {
     id: 2,
-    title: 'RPM',
+    title: 'telemedicine',
     link: '/company'
   
   },
@@ -131,46 +131,52 @@ const solutionsItems = [
     title: 'API Set',
   
   },
-  {
-    id: 4,
-    title: 'Analytics Service',
+  // {
+  //   id: 4,
+  //   title: 'Analytics Service',
   
-  },
-  {
-    id: 5,
-    title: 'AI/ML Development',
+  // },
+  // {
+  //   id: 5,
+  //   title: 'AI/ML Development',
   
-  },
+  // },
   {
     id: 6,
     title: 'EDMS',
   
   },
-  {
-    id: 7,
-    title: 'Data Integration',
+  // {
+  //   id: 7,
+  //   title: 'Data Integration',
   
-  },
-  {
-    id: 8,
-    title: 'Digital Recruitment',
+  // },
+  // {
+  //   id: 8,
+  //   title: 'Digital Recruitment',
   
-  },
+  // },
   {
     id: 9,
     title: 'Wearable Devices',
     link: '/products/smart-watch'
   
   },
+  {
+    id: 10,
+    title: 'Mobile App',
+    link: '/products/mobile-app'
+  
+  },
   
 ]//array for solutions data
 
 const aboutItems = [
-  {
-    id: 1,
-    title: 'Our Vision',
+  // {
+  //   id: 1,
+  //   title: 'Our Vision',
   
-  },
+  // },
   {
     id: 2,
     title: 'Our Team',
@@ -189,11 +195,11 @@ const aboutItems = [
     link: '/partnership'
 
   },
-  {
-    id: 5,
-    title: 'Donations',
+  // {
+  //   id: 5,
+  //   title: 'Donations',
   
-  },
+  // },
   {
     id: 6,
     title: 'Certification',
