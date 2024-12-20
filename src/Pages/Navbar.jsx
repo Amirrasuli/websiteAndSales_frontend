@@ -28,7 +28,7 @@ import navevent from '../assets/navevent.png';
 import navabout from '../assets/navabout.png';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from "axios";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const navItemStyle = {
@@ -103,8 +103,7 @@ const Navbar = React.memo((props) => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const { data } = await axios.get(
-                    'https://vitruvianshield.com/api/v1/user/settings',
+                const { data } = await axios.get(`${apiUrl}/api/v1/user/settings`,
                     { headers: { 'Authorization': `Bearer ${Token}` } }
                 );
                 console.log(data.picture);

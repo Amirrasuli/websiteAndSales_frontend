@@ -15,6 +15,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useSwipeable } from "react-swipeable";
 import {useNavigate} from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     typography: {
@@ -59,7 +60,7 @@ const Mediacard = () => {
     useEffect(() => {
         const fetchTopNews = async () => {
             try {
-                const response = await fetch('https://vitruvianshield.com/api/v1/top-news');
+                const response = await fetch(`${apiUrl}/api/v1/top-news`);
                 const newsData = await response.json();
                 setData(newsData.results.slice(0, 3));
             } catch (error) {

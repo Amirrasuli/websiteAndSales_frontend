@@ -11,6 +11,7 @@ import {
 import { useAuth } from '../../AuthContext.jsx';
 import BG from "../../assets/newsBoxBG.svg";
 import SignUpDialog from '../SignUp/LogInDialog.jsx';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const theme = createTheme({
@@ -99,7 +100,7 @@ const ContactBox = () => {
 
     if (authToken) {
         try {
-            const response = await fetch('https://vitruvianshield.com/api/v1/contact-req', {
+            const response = await fetch(`${apiUrl}/api/v1/contact-req`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

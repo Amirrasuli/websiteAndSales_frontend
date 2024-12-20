@@ -5,6 +5,7 @@ import blueArrowIcon from "../../assets/blueArrowIcon.svg";
 import BG from '../../assets/newsBoxBG.svg'
 import noto_pushpin from '../../assets/noto_pushpin.svg'
 import { Link, useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const navItemStyle = {
     fontFamily: 'Lato',
@@ -153,7 +154,7 @@ const NewsBox = () => {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await fetch(`https://vitruvianshield.com/api/v1/home-news`);
+                const response = await fetch(`${apiUrl}/api/v1/home-news`);
                 if (!response.ok) throw new Error("Network response was not ok");
                 const data = await response.json();
                 setNewsItems(data);

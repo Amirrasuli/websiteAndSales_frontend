@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { useAuth } from '../../AuthContext.jsx';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
   typography: {
@@ -130,7 +131,7 @@ const FeaturesDialog = () => {
     };
 
     try {
-      await axios.post('https://vitruvianshield.com/api/v1/feature-req', payload, {
+      await axios.post(`${apiUrl}/api/v1/feature-req`, payload, {
         headers: {
           'Authorization': `Bearer ${Token}`
         }

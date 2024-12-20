@@ -1,29 +1,44 @@
     import React, { useState, useEffect } from 'react';
-    import { Box, Typography, TextField, Avatar, Paper, ThemeProvider, createTheme, Autocomplete, Button, Dialog } from '@mui/material';
+    import {
+    Box,
+    Typography,
+    TextField,
+    Avatar,
+    Paper,
+    ThemeProvider,
+    createTheme,
+    Autocomplete,
+    Button,
+    Dialog,
+        Alert, Snackbar
+    } from '@mui/material';
     import axios from 'axios';
     import { useAuth } from '../../AuthContext.jsx';
     import ChangeEmail from './ChangeEmail';
     import ChangePhone from './ChangePhone';
     import camera from '../../assets/cameraAddPic.png'
+    import ImageCropDialog from "./CropDialog";
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     const theme = createTheme({
         typography: {
             h6: {
                 fontFamily: 'Lato',
-                fontSize: { xs: '12px', sm: '18px' },
+                fontSize: { xs: '12px', sm: '16px' },
                 lineHeight: 'normal',
                 color: '#8C8C8C',
                 textTransform: 'none',
             },
             h3: {
                 fontFamily: "Lato",
-                fontWeight: { xs: 600, sm: 700 },
-                fontSize: { xs: '14px', sm: '35px' },
+                fontWeight: 600,
+                fontSize: { xs: '14px', sm: '19px' },
                 color: "#FFFFFF",
                 textTransform: 'none',
             },
             button: {
                 fontFamily: 'Lato',
-                fontSize: { xs: '10px', sm: '16px' },
+                fontSize: { xs: '14px', sm: '16px' },
                 color: "#F1F1F1",
                 textTransform: 'none',
                 textAlign: 'left',
@@ -33,6 +48,17 @@
             text: {
                 primary: "#F1F1F1",
                 disabled: "#A5A5A5",
+            },
+        },
+        components: {
+            MuiButton: {
+                styleOverrides: {
+                    root: {
+                        '&.Mui-disabled': {
+                            fontSize: '14px',
+                        },
+                    },
+                },
             },
         },
     });
@@ -61,15 +87,22 @@
         const [dialogOpen, setDialogOpen] = useState(false);
         const [PhoneDialogOpen, setPhoneDialogOpen] = useState(false);
         const [focused, setFocused] = useState(false);
+        const [isDialogOpen, setIsDialogOpen] = useState(false);
+        const [srcPic, setSrcPic] = useState(null);
+        const [snackbarOpen, setSnackbarOpen] = useState(false);
+        const [snackbarMessage, setSnackbarMessage] = useState('');
+        const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
-
+        const showSnackbar = (message, severity = 'success') => {
+            setSnackbarMessage(message);
+            setSnackbarSeverity(severity);
+            setSnackbarOpen(true);
+        };
 
         useEffect(() => {
             const fetchUserData = async () => {
                 try {
-                    const { data } = await axios.get(
-                        'https://vitruvianshield.com/api/v1/user/settings',
-                        { headers: { 'Authorization': `Bearer ${Token}` } }
+                    const { data } = await axios.get(`${apiUrl}/api/v1/user/settings`, { headers: { 'Authorization': `Bearer ${Token}` } }
                     );
 
                     console.log(data.picture);
@@ -80,7 +113,7 @@
                         await downloadAndStoreImage(data.picture);
                     }
 
-                    const countriesResponse = await axios.get('https://vitruvianshield.com/api/v1/countries');
+                    const countriesResponse = await axios.get(`${apiUrl}/api/v1/countries`);
                     setCountryList(countriesResponse.data);
 
                     if (data.country) {
@@ -94,6 +127,7 @@
             const downloadAndStoreImage = async (imageUrl) => {
                 try {
                     const response = await fetch(imageUrl, {
+                        cache: 'no-cache',
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${Token}`,
@@ -145,7 +179,7 @@
 
             try {
                 await axios.patch(
-                    'https://vitruvianshield.com/api/v1/user/settings',
+                    `${apiUrl}/api/v1/user/settings`,
                     { ...dataToSend, phone: formatPhoneNumber(phoneWithPrefix) },
                     { headers: { 'Authorization': `Bearer ${Token}` } }
                 );
@@ -164,18 +198,18 @@
 
         const handleFileChange = async (event) => {
             const selectedFile = event.target.files[0];
-            if (selectedFile && selectedFile.type === "image/png") {
-                await uploadFile(selectedFile);
-            }
+            const imageUrl = URL.createObjectURL(selectedFile);
+            setSrcPic(imageUrl);
+            setIsDialogOpen(true);
         };
+
 
         const uploadFile = async (file) => {
             try {
                 const formData = new FormData();
                 formData.append("picture", file);
-
                 const response = await axios.post(
-                    "https://vitruvianshield.com/api/v1/user/new-picture/",
+                    `${apiUrl}/api/v1/user/new-picture/`,
                     formData,
                     {
                         headers: {
@@ -184,20 +218,31 @@
                     }
                 );
 
-
                 if (response.data) {
                     console.log("Upload Successful:", response.data);
-                    alert("Upload Successful");
+                    alert("File uploaded successfully!");
                     window.location.reload();
                 }
             } catch (error) {
                 console.error("Upload Failed:", error.response?.data || error.message);
-                alert("An error occurred during file upload.");
+                alert("An error occurred while uploading the file.");
             }
         };
+
+        const handleCropComplete = async (croppedArea) => {
+            console.log("Cropped Area: ", croppedArea, croppedArea.type);
+            const random = Date.now();
+            const croppedFile = new File([croppedArea], `UserPic-${random}.png`, { type: "image/png" });
+            console.log("Cropped File: ", croppedFile);
+            // آپلود فایل
+            if (croppedFile) {
+                await uploadFile(croppedFile);
+            }
+        };
+
         return (
-            <ThemeProvider theme={theme}>
-                <Box sx={{ width: '100%', background: '#262626',alignContent:'center',height: '100%',mb:{ sm: '0vw', xs: '13vw' },mt:{ sm: '3vw', xs: '0vw' } }}>
+        <ThemeProvider theme={theme}>
+            <Box sx={{ width: '100%', background: '#262626',alignContent:'center',height: '100%',mb:{ sm: '0vw', xs: '13vw' },pt:{ sm: '4.5vw', xs: '0vw' },pb:'3vw' }}>
                     <Box
                         sx={{
                             ml:{ sm: '5vw', xs: '0' },
@@ -212,7 +257,7 @@
 
                             <input
                                 type="file"
-                                accept="image/png"
+                                accept="image/*"
                                 onChange={handleFileChange}
                                 style={{
                                     display: "none",
@@ -291,13 +336,14 @@
 
                    </Box>
                     <Box sx={{ml:{ sm: '5vw', xs: '0' },}}>
-                        <Paper component="form" onSubmit={handleSubmit} sx={{ml:{xs:'12vw',sm:'5px'},width:{xs:'0vw',sm:'60vw'},pb:'3vw', borderRadius: '16px',background: '#262626', border: '1px solid', borderImageSource: 'linear-gradient(180deg, rgba(31, 31, 31, 0.3) 0%, rgba(20, 20, 20, 0.3) 100%)', boxShadow: '0px 2px 8px 0px #0000001A', }}>
+                        <Paper component="form" onSubmit={handleSubmit} sx={{ml:{xs:'9vw',sm:'5px'},width:{xs:'0vw',sm:'60vw'},pb:'3vw', borderRadius: '16px',background: '#262626', border: '1px solid', borderImageSource: 'linear-gradient(180deg, rgba(31, 31, 31, 0.3) 0%, rgba(20, 20, 20, 0.3) 100%)', boxShadow: '0px 2px 8px 0px #0000001A', }}>
                             <Box
                                 sx={{
                                     display: 'flex',
                                     flexWrap: 'wrap',
                                     gap: '2vw',
-                                    ml:'1vw',
+                                    ml:'3vw',
+                                    mt:'3vw',
                                     flexDirection: { xs: 'column', sm: 'row' },
                                 }}
                             >
@@ -321,12 +367,13 @@
                                                     justifyContent: 'flex-start',
                                                     alignItems: 'center',
                                                     paddingLeft: '10px',
-                                                    color: !isEditing ? theme.palette.text.disabled : theme.typography.h6.color,
+                                                    color: !isEditing ? theme.palette.text.disabled : '#F1F1F1',
                                                     "&:hover": {
                                                         backgroundColor: !isEditing ? '#262626' : '#333',
                                                         cursor: field === 'phone' ? 'not-allowed' : 'pointer',
                                                     },
                                                     "&.Mui-disabled": {
+                                                        ...theme.typography.button,
                                                         backgroundColor: '#262626',
                                                         borderColor: '#ccc',
                                                         color: theme.palette.text.disabled,
@@ -387,7 +434,8 @@
                                                                     borderColor: isEditing ? "#fff" : "#ccc",
                                                                 },
                                                                 ...(isEditing && {
-
+                                                                    ...theme.typography.button,
+                                                                    color:'#F1F1F1',
                                                                     "&:hover fieldset": {
                                                                         borderColor: "#ccc",
                                                                     },
@@ -433,11 +481,13 @@
                                                 sx={{
                                                     height: '48px',
                                                     "& .MuiOutlinedInput-root": {
+                                                        ...theme.typography.button,
                                                         height: '48px',
                                                         "& fieldset": {
                                                             borderColor: isEditing ? "#fff" : "#ccc",
                                                         },
                                                         ...(isEditing && {
+                                                            ...theme.typography.button,
                                                             "&:hover fieldset": {
                                                                 borderColor: "#ccc",
                                                             },
@@ -467,7 +517,7 @@
                         </Paper>
 
                     </Box>
-                    <Box sx={{ display: 'flex',flexDirection:{xs:'column',sm:'row'},width:{xs:'72vw',sm:'120px'}, justifyContent: {xs:'center',sm:'start'}, mt:'0.2vw',ml:{sm:'5.2vw',xs:'16vw'}, }}>
+                    <Box sx={{ display: 'flex',flexDirection:{xs:'column',sm:'row'},width:{xs:'72.2vw',sm:'120px'}, justifyContent: {xs:'center',sm:'start'}, mt:'0.2vw',ml:{sm:'5.2vw',xs:'14vw'}, }}>
                         {isEditing && (
                             <Button
                                 variant="contained"
@@ -491,9 +541,20 @@
                         </Button>
                     </Box>
                 </Box>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+            >
+                <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
 
                 <ChangeEmail open={dialogOpen} onClose={() => setDialogOpen(false)} />
                 <ChangePhone open={PhoneDialogOpen} onClose={() => setPhoneDialogOpen(false)} />
+                <ImageCropDialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} imageSrc={srcPic} onCropComplete={handleCropComplete}/>
             </ThemeProvider>
         );
     };

@@ -7,6 +7,7 @@ import {
     Typography,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function AuthForm() {
     const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ export default function AuthForm() {
         setError(null);
 
         try {
-            const loginResponse = await fetch('https://vitruvianshield.com/api/v1/token/', {
+            const loginResponse = await fetch(`${apiUrl}/api/v1/token/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -40,7 +41,7 @@ export default function AuthForm() {
             }
 
             if (loginResponse.status === 401) {
-                const registerResponse = await fetch('https://vitruvianshield.com/api/v1/register/', {
+                const registerResponse = await fetch(`${apiUrl}/api/v1/register/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password }),
@@ -65,7 +66,7 @@ export default function AuthForm() {
         setError(null);
 
         try {
-            const verifyResponse = await fetch('https://vitruvianshield.com/api/v1/verify-email/', {
+            const verifyResponse = await fetch(`${apiUrl}/api/v1/verify-email/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, code: verificationCode }),

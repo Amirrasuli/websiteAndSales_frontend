@@ -122,11 +122,9 @@ const Allinonecard = ({ data }) => {
                                 <Box sx={imageContainerStyle}>
                                     <Box
                                         sx={{
-                                            borderRadius: { xs: '20vw', sm: '5.21vw'},
-                                            border: '0.052vw dashed #8AE6DE',
                                             p: { xs: '1vw', sm: '0.52vw'},
-                                            width: { xs: '19.44vw', sm: '7.44vw' },
-                                            height: { xs: '19.44vw', sm: '7.44vw' },
+                                            width: { xs: '19.44vw', sm: '7.9vw' },
+                                            height: { xs: '19.44vw', sm: '7.9vw' },
                                             display: 'flex',
                                             justifyContent: 'center',
                                             alignItems: 'center',
@@ -141,11 +139,9 @@ const Allinonecard = ({ data }) => {
                                             src={box.photo}
                                             alt="circle"
                                             style={{
-                                                border: '0.052vw solid #8AE6DE',
                                                 width:'100%',
                                                 height:'100%',
                                                 objectFit: 'cover',
-                                                borderRadius: '50%'
                                             }}
                                         />
                                     </Box>

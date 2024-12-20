@@ -16,6 +16,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { useAuth } from '../../AuthContext.jsx';
 import SignUpDialog from '../SignUp/LogInDialog.jsx';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     palette: {
@@ -81,7 +82,7 @@ const ContactFormDialog = ({ open, onClose, type }) => {
 
         if (authToken) {
             try {
-                const response = await fetch('https://vitruvianshield.com/api/v1/contact-req', {
+                const response = await fetch(`${apiUrl}/api/v1/contact-req`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

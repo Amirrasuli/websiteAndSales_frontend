@@ -12,6 +12,7 @@ import noto_pushpin from "../../assets/noto_pushpin.svg";
 import blueArrowIcon from "../../assets/blueArrowIcon.svg";
 import BG from "../../assets/newsBoxBG.svg";
 import moreicn from "../../assets/next.png";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     typography: {
@@ -160,7 +161,7 @@ const NewsCard = () => {
     const [timeAgo, setTimeAgo] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
-        fetch(`https://vitruvianshield.com/api/v1/news/${slug}`)
+        fetch(`${apiUrl}/api/v1/news/${slug}`)
             .then((response) => response.json())
             .then((data) => {
                 setNewsData(data);
@@ -282,7 +283,7 @@ const NewsCard = () => {
                                 }}
                             />
                             <Typography sx={{ ...theme.typography.button, display: { sm: 'block', xs: 'none' } }}>Share:</Typography>
-                            <IconButton sx={{ p: 0,mb:'2vw' }} onClick={() => shareOnFacebook(`https://vitruvianshield.com/news/${slug}`)}>
+                            <IconButton sx={{ p: 0,mb:'2vw' }} onClick={() => shareOnFacebook(`${apiUrl}/news/${slug}`)}>
                                 <img
                                     src={Facebook}
                                     alt="Facebook"
@@ -294,7 +295,7 @@ const NewsCard = () => {
                                     }}
                                 />
                             </IconButton>
-                            <IconButton sx={{ p: 0,mb:'2vw' }} onClick={() => shareOnTwitter(`https://vitruvianshield.com/news/${slug}`)}>
+                            <IconButton sx={{ p: 0,mb:'2vw' }} onClick={() => shareOnTwitter(`${apiUrl}/news/${slug}`)}>
                                 <img
                                     src={Twitter}
                                     alt="Twitter"
@@ -305,7 +306,7 @@ const NewsCard = () => {
                                     }}
                                 />
                             </IconButton>
-                            <IconButton sx={{ p: 0,mb:'2vw' }} onClick={() => copyToClipboard(`https://vitruvianshield.com/news/${slug}`)}>
+                            <IconButton sx={{ p: 0,mb:'2vw' }} onClick={() => copyToClipboard(`${apiUrl}/news/${slug}`)}>
                                 <img
                                     src={Share}
                                     alt="Share"

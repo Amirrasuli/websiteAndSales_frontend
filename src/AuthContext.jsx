@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const AuthContext = createContext();
 
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     const refreshAccessToken = async () => {
         if (!refreshToken) return;
         try {
-            const response = await fetch('https://vitruvianshield.com/api/v1/token/refresh/', {
+            const response = await fetch(`${apiUrl}/api/v1/token/refresh/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

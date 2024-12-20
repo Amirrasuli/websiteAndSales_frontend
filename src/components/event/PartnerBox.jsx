@@ -5,9 +5,6 @@ import paulo from '../../assets/paulo.png'
 import bruno from '../../assets/bruno.png'
 import tayo from '../../assets/tayo.png'
 import vahid from '../../assets/vahid.png'
-import linkedin from '../../assets/LinkedIn 2.png'
-import Instagram from '../../assets/Instagram.png'
-import Twitter from '../../assets/TwitterX.png'
 
 const theme = createTheme({
     typography: {
@@ -44,40 +41,28 @@ const PartnerData = [
       picture: paulo,
       name: 'Paulo Martins',
       detail: 'Management, sales, marketing, design, R&D',
-      job: 'Founder and CEO', 
-      linkedinUrl: 'https://www.linkedin.com/in/vitruvianshield/',
-      instagramUrl: 'https://instagram.com',
-      twitterUrl: 'https://x.com',
+      job: 'Founder and CEO',
     },
     {
       picture: bruno,
       name: 'Bruno Carrilho',
-      job: 'General Manager', 
-      linkedinUrl: 'https://www.linkedin.com/in/bruno-c-9a398926b/',
-      instagramUrl: 'https://instagram.com',
-      twitterUrl: 'https://x.com',
+      job: 'General Manager',
     },
     {
       picture: tayo,
       name: 'Mogboluwaga Otegbayo',
       detail: 'BSc in Computer Engineering',
-      job: 'QA', 
-      linkedinUrl: 'https://www.linkedin.com/in/mogboluwaga-otegbayo/',
-      instagramUrl: 'https://instagram.com',
-      twitterUrl: 'https://x.com',
+      job: 'QA',
     },
     {
       picture: vahid,
       name: 'Vahid Khazaei Nezhad',
       detail: 'MSc in Software Engineering Data Scientist and Software Designer',
-      job: 'CTO', 
-      linkedinUrl: 'https://www.linkedin.com/in/vahid-khazaei-nezhad-a4074595/',
-      instagramUrl: 'https://instagram.com',
-      twitterUrl: 'https://x.com',
+      job: 'CTO',
     },
 ];
 
-const PartnerCard = ({ picture, name, detail, job, linkedinUrl, instagramUrl, twitterUrl }) => {
+const PartnerCard = ({ picture, name, detail, job }) => {
     return (
       <Box
         sx={{
@@ -137,12 +122,43 @@ const PartnerCard = ({ picture, name, detail, job, linkedinUrl, instagramUrl, tw
           >
             {name}
           </Typography>
-          <Typography variant="job" sx={{ fontSize: {xs:'10px',sm:'14px'},textAlign: 'center', width: '100%', marginTop: '4px' }}>
-            {job} {/* Changed from email to job */}
-          </Typography>
-          <Typography variant="detail" sx={{ width: '100%', marginTop: '10px',fontSize: {xs:'10px',sm:'12px'},textAlign: 'center',borderTop: detail ? '0.052vw dashed rgba(255, 255, 255, 0.20)' : 'none',py:1,px:{xs:0,sm:1} }}>
-            {detail}
-          </Typography>
+          <Typography 
+    variant="job" 
+    sx={{ 
+      fontSize: { xs: '10px', sm: '14px' }, 
+      textAlign: 'center', 
+      width: '100%' 
+    }}
+  >
+    {job} {/* Changed from email to job */}
+  </Typography>
+
+  {/* Conditionally render the line only if detail exists */}
+  {detail && (
+    <Box 
+    sx={{ 
+      width: '60%', // Adjust the width as needed
+      borderTop: '1px dashed rgba(255, 255, 255, 0.20)', // Dashed line
+      margin: '8px auto 0 auto' // 8px margin-top, auto centers horizontally
+    }} 
+  />
+  
+  )}
+
+  <Typography 
+    variant="detail" 
+    sx={{ 
+      width: '100%', 
+      marginTop: '10px', 
+      fontSize: { xs: '10px', sm: '12px' }, 
+      textAlign: 'center', 
+      //borderTop: detail ? '0.052vw dashed rgba(255, 255, 255, 0.20)' : 'none', 
+      py: 1, 
+      px: { xs: 0, sm: 1 } 
+    }}
+  >
+    {detail}
+  </Typography>
         </Box>
       </Box>
     );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, createTheme, ThemeProvider } from "@mui/material";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     typography: {
@@ -30,7 +31,7 @@ const MemberCountBox = () => {
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                const response = await fetch('https://vitruvianshield.com/api/v1/members');
+                const response = await fetch(`${apiUrl}/api/v1/members`);
                 const apiData = await response.json();
 
                 const totalMembers = apiData.reduce((acc, team) => acc + team.members.length, 0);

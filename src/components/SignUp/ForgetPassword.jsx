@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FormInput from '../custom/FormInput';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 // Validation function for email
 const validateEmail = (email) => {
@@ -63,7 +64,7 @@ const ForgotPasswordDialog = ({ onBack, showSnackbar, }) => {
             return;
         }
 
-        fetch('https://vitruvianshield.com/api/v1/forgot-password/', {
+        fetch(`${apiUrl}/api/v1/forgot-password/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

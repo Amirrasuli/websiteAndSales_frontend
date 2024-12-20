@@ -14,6 +14,7 @@ import {
 import { useAuth } from '../../AuthContext.jsx';
 import { createTheme } from "@mui/material/styles";
 import {useNavigate} from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     typography: {
@@ -55,7 +56,7 @@ const ChangeEmailDialog = ({ open, onClose }) => {
     const VERIFICATION_TIME_KEY = `verificationRequestTime_${email}`;
 
     const onResend = () => {
-        fetch('https://vitruvianshield.com/api/v1/request-verification-code/', {
+        fetch(`${apiUrl}/api/v1/request-verification-code/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -106,7 +107,7 @@ const ChangeEmailDialog = ({ open, onClose }) => {
 
     const handleSendCode = async () => {
         try {
-            const response = await fetch("https://vitruvianshield.com/api/v1/user/new-email/", {
+            const response = await fetch(`${apiUrl}/api/v1/user/new-email/`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -129,7 +130,7 @@ const ChangeEmailDialog = ({ open, onClose }) => {
 
     const handleSubmitCode = async () => {
         try {
-            const response = await fetch("https://vitruvianshield.com/api/v1/user/new-email/submit-code/", {
+            const response = await fetch(`${apiUrl}/api/v1/user/new-email/submit-code/`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

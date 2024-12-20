@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Typography } from "@mui/material";
 import Allinonecard from './AllInOneCard';
 import bg from '../../assets/membersBG1.svg';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     typography: {
@@ -44,7 +45,7 @@ const TeamMembers = () => {
 
     useEffect(() => {
         const fetchTeams = async () => {
-            const response = await fetch('https://vitruvianshield.com/api/v1/members');
+            const response = await fetch(`${apiUrl}/api/v1/members`);
             const teamsData = await response.json();
             setData(teamsData);
         };

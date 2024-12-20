@@ -1,11 +1,12 @@
 import React from "react";
 import {Box, Button} from "@mui/material";
 import google from '../../assets/Google.png';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const GoogleSignInButton = () => {
   const googleClientId =
     "1037115696115-5cvfcpvi40n6fhk2hepv8450vn712qud.apps.googleusercontent.com";
-  const redirectUri = "https://vitruvianshield.com/google/callback";
+  const redirectUri = `${apiUrl}/google/callback`;
 
   const handleSignIn = () => {
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile&access_type=offline`;

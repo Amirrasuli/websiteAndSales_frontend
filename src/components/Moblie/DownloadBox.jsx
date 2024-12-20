@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import ContactFormDialog from '../custom/ContactFormDialog.jsx';
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const theme = createTheme({
@@ -52,7 +53,7 @@ const Home = () => {
     useEffect(() => {
         const fetchLink = async () => {
             try {
-                const response = await axios.get('https://vitruvianshield.com/api/v1/applications');
+                const response = await axios.get(`${apiUrl}/api/v1/applications`);
                 const data = response.data;
 
                 // پیدا کردن لینک با جدیدترین release_date

@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
   ThemeProvider,
   createTheme,
-  Link,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Divider
+  Divider,
+  Button
 } from '@mui/material';
-import FacebookCircled from '../assets/Facebook.png'
-import LinkedInCircled from '../assets/LinkedInCircled.png'
-import YoutubeCircled from '../assets/Youtube.png'
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import pci from '../assets/pci.png';
@@ -20,6 +17,11 @@ import biopole from '../assets/biopole.png';
 import astrolab from '../assets/astrolab.png';
 import footerloc from '../assets/footerloc.svg';
 import { useNavigate } from 'react-router-dom';
+import footerBG from '../assets/footerBG.png';
+import ContactFormDialog from '../components/custom/ContactFormDialog.jsx';
+import footerM from '../assets/footerM.png';
+import footerIN from '../assets/footerIN.png';
+import footerYT from '../assets/footerYT.png';
 
 const theme = createTheme({
   typography: {
@@ -29,13 +31,21 @@ const theme = createTheme({
       fontSize: '16px',
       lineHeight: '16px',
       letterSpacing: '0.5px',
-      color: '#FFFFFF',
+      color: '#8AE6DE',
     },
     h6: {
       fontFamily: 'Lato',
       fontWeight: 700,
       fontSize: '14px',
       lineHeight: '14px',
+      letterSpacing: '0.5px',
+      color: '#FFFFFF',
+    },
+    body1: {
+      fontFamily: 'Lato',
+      fontWeight: 400,
+      fontSize: '13px',
+      lineHeight: '18.98px',
       letterSpacing: '0.5px',
       color: '#FFFFFF',
     },
@@ -54,6 +64,11 @@ const theme = createTheme({
       lineHeight: '25.2px',
       color: '#EEEEEE',
 
+    },
+    button: {
+        fontFamily: 'Lato',
+        fontSize: { xs: '11px', sm: '12px', md: '16px' },
+        color: "#FCFCFC",
     },
   },
 });
@@ -76,54 +91,91 @@ const locations = [
   },
 ];
 
-const videoIds = ['aWnbr8Aagbo', 'z2KFOvcP3IQ', 'YOpXuRqvpVU'];
+const IconButton = ({ icon }) => {
+  return (
+    <Box
+      sx={{
+        width: "45px",
+        height: "45px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#141414",
+        border: "1px solid #FFFFFF30",
+        padding: "14px 10px",
+        gap: "10px",
+        borderRadius: '50%',
+        opacity: 1, // Change opacity if needed
+      }}
+    >
+      {icon}
+    </Box>
+  );
+};
 
 const solutionsItems = [
-  // {
-  //   id: 1,
-  //   title: 'The problem',
-  //
-  // },
-   {
-     id: 2,
-    title: 'Web App',
-     link: '/products/dashboard'
-   },
+  {
+    id: 1,
+    title: 'CTMD',
+    link: '/company'
+  
+  },
+  {
+    id: 2,
+    title: 'telemedicine',
+    link: '/company'
+  
+  },
   {
     id: 3,
-    title: 'The Smartwatch',
-    link: '/products/smart-watch'
-
+    title: 'API Set',
+  
   },
-  {
-    id: 4,
-    title: 'Mobile App',
-    link: '/products/mobile-app'
-
-  },
+  // {
+  //   id: 4,
+  //   title: 'Analytics Service',
+  
+  // },
   // {
   //   id: 5,
-  //   title: 'Research API',
-  //
-  // },
-  // {
-  //   id: 6,
-  //   title: 'Data & Research',
-  //
+  //   title: 'AI/ML Development',
+  
   // },
   {
-    id: 7,
-    title: 'Certifications',
-    link: '/Certifications'
-
+    id: 6,
+    title: 'EDMS',
+  
   },
+  // {
+  //   id: 7,
+  //   title: 'Data Integration',
+  
+  // },
+  // {
+  //   id: 8,
+  //   title: 'Digital Recruitment',
+  
+  // },
+  {
+    id: 9,
+    title: 'Wearable Devices',
+    link: '/products/smart-watch'
+  
+  },
+  {
+    id: 10,
+    title: 'Mobile App',
+    link: '/products/mobile-app'
+  
+  },
+  
 ]//array for solutions data
 
 const aboutItems = [
   // {
   //   id: 1,
   //   title: 'Our Vision',
-  //
+  
   // },
   {
     id: 2,
@@ -146,31 +198,45 @@ const aboutItems = [
   // {
   //   id: 5,
   //   title: 'Donations',
-  //
+  
   // },
   {
     id: 6,
-    title: 'Contact Us',
+    title: 'Certification',
     link: '/company'
 
   },
-  // {
-  //   id: 7,
-  //   title: 'Gallery',
-  //
-  //
-  // },
 ]//array for solutions data
 
 
 const Footer = () => {
   const navigate = useNavigate()
+  const [openDialog, setOpenDialog] = useState(false);
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
   return (
     <ThemeProvider theme={theme}>
       {/* Desktop version */}
       <Box
         sx={{
-          backgroundColor: '#141414',
+          background: `linear-gradient(
+            0deg, 
+            rgba(0, 0, 0, 0) 0%, 
+            rgba(0, 0, 0, 0.0780267) 20.38%, 
+            rgba(0, 0, 0, 0.254689) 46.82%, 
+            rgba(0, 0, 0, 0.4) 60.82%, 
+            rgba(0, 0, 0, 0.4) 72.93%, 
+            rgba(0, 0, 0, 0.4) 93.52%
+          ), url(${footerBG})`,
+          backgroundSize: 'cover', // Ensures the image covers the entire box
+          backgroundPosition: 'center', // Centers the background image
+          backgroundRepeat: 'no-repeat', // Prevents repeating the image
           py: 8,
           width: '100%',
           minHeight: '800px',
@@ -179,50 +245,11 @@ const Footer = () => {
           alignItems: 'center',
         }}
       >
-        <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1.5em' }}>
-          {/* ABOUT US Box */}
-          <Box sx={{ ...commonBoxStyles, width: '11em' }}>
-            <Typography gutterBottom variant="h3" marginTop="16px" marginBottom="24px">ABOUT US</Typography>
-            {aboutItems.map((item, index) => (
-                <Typography
-                    variant="body9"
-                    marginTop="5px"
-                    sx={{
-                      cursor: `${item.link ? 'pointer' : 'default'}`
-                    }}
-                    key={index}
-                    onClick={item.link ? () => { window.location.href = item.link } : undefined}
-                >
-                  {item.title}
-                </Typography>
-            ))}
-          </Box>
-
-          <Divider orientation='vertical' sx={{ borderColor: '#262626', height: '360px', marginTop: '32px', borderStyle: 'dashed' }} />
-
-          {/* OUR SOLUTIONS Box */}
-          <Box sx={{ ...commonBoxStyles, width: '11em' }}>
-            <Typography gutterBottom variant="h3" marginTop="16px" marginBottom="24px">OUR SOLUTIONS</Typography>
-            {solutionsItems.map((item, index) => (
-              <Typography
-                variant="body9"
-                marginTop="5px"
-                sx={{
-                  cursor: `${item.link ? 'pointer' : 'default'}`
-                }}
-                key={index}
-                onClick={item.link ? () => { window.location.href = item.link } : undefined}
-              >
-                {item.title}
-              </Typography>
-            ))}
-          </Box>
-
-          <Divider orientation='vertical' sx={{ borderColor: '#262626', height: '360px', marginTop: '32px', borderStyle: 'dashed' }} />
-
+        <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: {sm:'10px',md:'18px',lg:'48px'} }}>
+          
           {/* Visit us Section */}
           <Box sx={{ ...commonBoxStyles, width: '22em' }}>
-            <Typography variant="h3" marginTop="16px">VISIT US</Typography>
+            <Typography variant="h3" marginTop="16px">Branches</Typography>
             {locations.map((location, index) => (
               <Box marginTop="32px" key={index}>
                 <img src={location.image} alt={location.name} style={{ width: '103px', height: 'auto', marginRight: '8px', display: 'flex', justifyContent: 'flex-start' }} />
@@ -240,40 +267,88 @@ const Footer = () => {
             ))}
           </Box>
 
-          <Divider orientation='vertical' sx={{ borderColor: '#262626', height: '360px', marginTop: '32px', borderStyle: 'dashed' }} />
+          <Divider orientation='vertical' sx={{ borderColor: '#424242B2', height: '471px', marginTop: '32px', borderStyle: 'dashed' }} />
 
-          {/* Video Section */}
-          <Box
-            sx={{
-              ...commonBoxStyles,
-              justifyContent: 'center',
-              gap: '56px',
-              marginTop: '12px'
-            }}
-          >
-            {videoIds.map((id, index) => (
-              <Box sx={{ position: 'relative', width: '100%', paddingTop: '56.25%' }}> {/* نسبت 16:9 */}
-                <iframe
-                  key={index}
-                  title={`YouTube Video ${index + 1}`}
-                  src={`https://www.youtube.com/embed/${id}`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                  }}
-                />
-              </Box>
-
-
+          {/* OUR SOLUTIONS Box */}
+          <Box sx={{ ...commonBoxStyles, width: '11em' }}>
+            <Typography gutterBottom variant="h3" marginTop="16px" marginBottom="24px">OUR SOLUTIONS</Typography>
+            {solutionsItems.map((item, index) => (
+              <Typography
+                variant="body9"
+                marginTop="8px"
+                sx={{
+                  cursor: `${item.link ? 'pointer' : 'default'}`
+                }}
+                key={index}
+                onClick={item.link ? () => { window.location.href = item.link } : undefined}
+              >
+                {item.title}
+              </Typography>
             ))}
+          </Box>
+
+          <Divider orientation='vertical' sx={{ borderColor: '#424242B2', height: '471px', marginTop: '32px', borderStyle: 'dashed' }} />
+
+          {/* ABOUT US Box */}
+          <Box sx={{ ...commonBoxStyles, width: '11em' }}>
+            <Typography gutterBottom variant="h3" marginTop="16px" marginBottom="24px">ABOUT US</Typography>
+            {aboutItems.map((item, index) => (
+                <Typography
+                    variant="body9"
+                    marginTop="8px"
+                    sx={{
+                      cursor: `${item.link ? 'pointer' : 'default'}`
+                    }}
+                    key={index}
+                    onClick={item.link ? () => { window.location.href = item.link } : undefined}
+                >
+                  {item.title}
+                </Typography>
+            ))}
+          </Box>
+
+          <Divider orientation='vertical' sx={{ borderColor: '#424242B2', height: '471px', marginTop: '32px', borderStyle: 'dashed' }} />
+
+          {/* GET IN TOUCH */}
+          <Box
+            sx={{ ...commonBoxStyles, width: '22em' }}
+          >
+            <Typography gutterBottom variant="h3" marginTop="16px" marginBottom="24px">GET IN TOUCH</Typography>
+            <Typography gutterBottom variant="body1" marginTop="16px" marginBottom="24px">Let's contact with us. Ask what answer you need. You can also contact with the agent if you have any question.</Typography>
+
+            <Button
+              variant="contained"
+              onClick={handleOpenDialog}
+              sx={{
+                  ...theme.typography.button,
+                  borderRadius: '4px',
+                  border:'1px solid #FFF',
+                  textTransform: 'none',
+                  backgroundColor: 'transparent',
+                  width: {xs:'80px',md:'90px',lg:'299px'},
+                  height: {xs:'30px',md:'28px',lg:'37px'},
+                  '&:hover': {
+                      backgroundColor: 'transparent',
+                  },
+              }}
+              disableRipple
+            >
+              Contact Us
+            </Button>
+            <ContactFormDialog open={openDialog} onClose={handleCloseDialog} type={17}/>
+            {/* links */}
+            <Box sx={{ display: "flex", gap: "16px", mt: '24px' }}>
+              <a href="https://www.youtube.com/@vitruvianshield3647/" target="_blank" rel="noopener noreferrer">
+                <IconButton icon={<img src={footerYT} alt="YouTube" width="100%" />} />
+              </a>
+              <a href="https://www.linkedin.com/company/vitruvianshield/" target="_blank" rel="noopener noreferrer">
+                <IconButton icon={<img src={footerIN} alt="LinkedIn" width="100%" />} />
+              </a>
+              <a href="https://www.messenger.com" target="_blank" rel="noopener noreferrer">
+                <IconButton icon={<img src={footerM} alt="M Icon" width="100%" />} />
+              </a>
+            </Box>
+            
           </Box>
         </Box>
       </Box>

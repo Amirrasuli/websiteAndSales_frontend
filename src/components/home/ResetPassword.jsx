@@ -14,6 +14,7 @@ import {
     Typography, Box,
 } from '@mui/material';
 import { Visibility, VisibilityOff, Close } from '@mui/icons-material';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const navItemStyle = {
     fontFamily: 'Lato',
@@ -41,10 +42,10 @@ const ResetPasswordDialog = ({ open, onClose, token }) => {
             return;
         }
 
-        const apiUrl = `https://vitruvianshield.com/api/v1/reset-password/${token}`;
+        const sendApiUrl = `${apiUrl}/api/v1/reset-password/${token}`;
         const payload = { password };
 
-        fetch(apiUrl, {
+        fetch(sendApiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

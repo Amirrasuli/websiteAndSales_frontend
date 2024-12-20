@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { createTheme } from '@mui/material/styles';
 import FormInput from '../custom/FormInput';
 import GoogleSignInButton from './GoogleSignInButton';
+import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     typography: {},
@@ -58,7 +60,7 @@ const AuthForm = ({ email: initialEmail = null, onForgotPassword, onLoginSuccess
 
         try {
             if (!signIn) {
-                const loginResponse = await fetch('https://vitruvianshield.com/api/v1/token/', {
+                const loginResponse = await fetch(`${apiUrl}/api/v1/token/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -66,21 +68,24 @@ const AuthForm = ({ email: initialEmail = null, onForgotPassword, onLoginSuccess
                     body: JSON.stringify({email, password}),
                 });
 
-                if (loginResponse.ok) {
+                if (loginResponse.status === 200) {
                     const loginData = await loginResponse.json();
                     localStorage.setItem('authToken', loginData.access);
                     localStorage.setItem('refreshToken', loginData.refresh);
+                    localStorage.setItem('role', loginData.role)
                     onLoginSuccess();
                     showSnackbar('Login successful!', 'success');
                 } else if (loginResponse.status === 202) {
                     showSnackbar('User not verified.', 'error');
                     onSendResetLink(email);
+                } else if (loginResponse.status === 401) {
+                    showSnackbar('No account found with given credentials!,please signUp First', 'error');
                 } else {
                     const errorData = await loginResponse.json();
                     showSnackbar(errorData.message || 'Login failed. Please try again.', 'error');
                 }
             } else {
-                const registerResponse = await fetch('https://vitruvianshield.com/api/v1/register/', {
+                const registerResponse = await fetch(`${apiUrl}/api/v1/register/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -105,7 +110,7 @@ const AuthForm = ({ email: initialEmail = null, onForgotPassword, onLoginSuccess
 
     const handleSuccessGoogle = async (response) => {
         try {
-            const res = await fetch('https://vitruvianshield.com/api/v1/auth/google/callback/', {
+            const res = await fetch(`${apiUrl}/api/v1/auth/google/callback/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: response.code }),

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const GoogleLogin = () => {
     const [searchParams] = useSearchParams();
@@ -19,7 +20,7 @@ const GoogleLogin = () => {
 
     const handleGoogleCallback = async (code) => {
         // console.log(code)
-        const response = await fetch("https://vitruvianshield.com/api/v1/auth/google/callback/", {
+        const response = await fetch(`${apiUrl}/api/v1/auth/google/callback/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

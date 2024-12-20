@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { parsePhoneNumberFromString, AsYouType } from "libphonenumber-js";
 import InputMask from "react-input-mask";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const ChangeNumberDialog = ({ open, onClose }) => {
@@ -22,7 +23,7 @@ const ChangeNumberDialog = ({ open, onClose }) => {
 
     useEffect(() => {
         const fetchCountries = async () => {
-            const response = await fetch("https://vitruvianshield.com/api/v1/countries");
+            const response = await fetch(`${apiUrl}/api/v1/countries`);
             const data = await response.json();
             setCountries(data);
         };
@@ -73,7 +74,7 @@ const ChangeNumberDialog = ({ open, onClose }) => {
         }
 
         try {
-            const response = await fetch("https://vitruvianshield.com/api/v1/verify-number/", {
+            const response = await fetch(`${apiUrl}/api/v1/verify-number/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -107,7 +108,7 @@ const ChangeNumberDialog = ({ open, onClose }) => {
         }
 
         try {
-            const response = await fetch("https://vitruvianshield.com/api/v1/submit-number/", {
+            const response = await fetch(`${apiUrl}/api/v1/submit-number/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

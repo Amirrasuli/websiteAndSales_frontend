@@ -3,6 +3,7 @@ import { Box, Button, Typography, LinearProgress, createTheme } from '@mui/mater
 import { ThemeProvider } from "@mui/material/styles";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const theme = createTheme({
@@ -32,7 +33,7 @@ const Slider = () => {
     useEffect(() => {
         const fetchSlides = async () => {
             try {
-                const fallbackResponse = await fetch('https://vitruvianshield.com/api/v1/events/websummit');
+                const fallbackResponse = await fetch(`${apiUrl}/api/v1/events/websummit`);
                 const fallbackData = await fallbackResponse.json();
 
                 const sortedData = fallbackData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -82,37 +83,36 @@ const Slider = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    maxHeight: '746px',
-                    minHeight: { xs: '179px', sm: '480px', md: '720px', lg: '900px' }
+                    minHeight: { xs: '360px', sm: '480px', md: '720px', lg: '900px' }
                 }}
             >
                 <Box
                     sx={{
-                        mt: { xs: '180px', sm: '220px', md: '270px', lg: '318px' },
+                        mt: { xs: '180px', sm: '150px', md: '300px', lg: '318px' },
                         minHeight: { xs: '180px', sm: '220px', md: '270px', lg: '318px' },
                         position: 'relative',
                         display: {xs:'none',sm:'flex'},
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'flex-start',
-                        ml: { xs: 5, sm: 10, md: 19, lg: 24, xl: 28 },
+                        ml: { xs: 5, sm: 10, md: 12, lg: 24, xl: 28 },
                     }}
                 >
-                    <Typography sx={{ ...theme.typography.h3,maxWidth: '30vw',mb:'1vw' }}>
+                    {/*<Typography sx={{ ...theme.typography.h3,maxWidth: '30vw',mb:'1vw' }}>
                         {slides[currentSlide].title}
                     </Typography>
                     <Typography sx={{ maxWidth: '30vw', ...theme.typography.h6 }}>
                         {slides[currentSlide].description.length > 240
                             ? `${slides[currentSlide].description.substring(0, 240)}`
                             : slides[currentSlide].description}
-                    </Typography>
+                    </Typography>*/}
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mt: 4,ml: { xs: 5, sm: 10, md: 19, lg: 24, xl: 28 }, }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1, md: 2, lg: 3, xl: 3 }, mt: { xs: 1, sm: 0, md: 3, lg: 4, xl: 4 },ml: { xs: 5, sm: 10, md: 15, lg: 20, xl: 24 }, }}>
                     <Button
                         onClick={handlePreviousSlide}
                         sx={{
-                            minWidth: '70px',
-                            minHeight: '70px',
+                            minWidth: { xs: '10px', sm: '50px', md: '60px', lg: '70px' },
+                            minHeight: { xs: '10px', sm: '50px', md: '60px', lg: '70px' },
                             borderRadius: '50%',
                             backgroundColor: 'rgba(217, 217, 217, 1)',
                             color: '#000000',
@@ -122,13 +122,13 @@ const Slider = () => {
                             pl: 1.5,
                         }}
                     >
-                        <ArrowBackIosIcon sx={{ fontSize: '16px' }} />
+                        <ArrowBackIosIcon sx={{ fontSize: { xs: '10px', sm: '12px', md: '14px', lg: '16px' } }} />
                     </Button>
                     <Button
                         onClick={handleNextSlide}
                         sx={{
-                            minWidth: '70px',
-                            minHeight: '70px',
+                            minWidth: { xs: '10px', sm: '50px', md: '60px', lg: '70px' },
+                            minHeight: { xs: '10px', sm: '50px', md: '60px', lg: '70px' },
                             borderRadius: '50%',
                             backgroundColor: 'rgba(217, 217, 217, 1)',
                             color: '#000000',
@@ -137,7 +137,7 @@ const Slider = () => {
                             justifyContent: 'center',
                         }}
                     >
-                        <ArrowForwardIosIcon sx={{ fontSize: '16px' }} />
+                        <ArrowForwardIosIcon sx={{ fontSize: { xs: '10px', sm: '12px', md: '14px', lg: '16px' }}} />
                     </Button>
 
                     <Box sx={{display: {xs:'none',sm:'flex'}, alignItems: 'center', ml: 2 }}>
@@ -145,8 +145,8 @@ const Slider = () => {
                             variant="determinate"
                             value={((currentSlide + 1) / slides.length) * 100}
                             sx={{
-                                width: '14vw',
-                                height: 2,
+                                width: { xs: '160px', sm: '180px', md: '200px', lg: '260px' },
+                                height: { xs: '2.0px', sm: '2px', md: '2px', lg: '2px' },
                                 borderRadius: 5,
                                 backgroundColor: 'rgba(255, 255, 255, 1)',
                                 '& .MuiLinearProgress-bar': {

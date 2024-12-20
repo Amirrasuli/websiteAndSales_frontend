@@ -151,7 +151,7 @@ const Certifications = () => {
                         alignItems: 'center',
                         rowGap: '32px', // Keeping the original row gap
                         gridTemplateRows: 'auto',
-                        width: {xs:'90%',sm:'100%'},
+                        width: {xs:'90%',sm:'72.68%'},
                         maxWidth: '100%'
                     }}
                     

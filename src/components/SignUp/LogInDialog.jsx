@@ -5,6 +5,7 @@ import LoginDialog from './Login.jsx';
 import ForgotPasswordDialog from './ForgetPassword.jsx';
 import VerificationEmailDialog from './Verification.jsx';
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const SignUpDialog = ({ open, onClose, email: initialEmail = null }) => {
     const [dialogMode, setDialogMode] = useState('login');
@@ -39,7 +40,7 @@ const SignUpDialog = ({ open, onClose, email: initialEmail = null }) => {
     };
 
     const handleResendVerificationEmail = (email) => {
-        fetch('https://vitruvianshield.com/api/v1/request-verification-code/', {
+        fetch(`${apiUrl}/api/v1/request-verification-code/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,15 +48,15 @@ const SignUpDialog = ({ open, onClose, email: initialEmail = null }) => {
             body: JSON.stringify({ email })
         })
             .then(response => {
-                if (!response.ok) throw new Error('Failed to resend verification email');
+                if (!response.ok) throw new Error('Failed to send verification email');
                 return response.json();
             })
             .then(data => {
-                showSnackbar('Verification email resent successfully!');
+                showSnackbar('Verification email sent successfully!');
             })
             .catch(error => {
-                console.error('Error resending verification email:', error);
-                showSnackbar('Error resending verification email.', 'error');
+                console.error('Error sending verification email:', error);
+                showSnackbar('Error sending verification email.', 'error');
             });
     };
 

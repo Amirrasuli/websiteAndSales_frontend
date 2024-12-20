@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Mediacard from './Mediacard';
 import { Typography } from "@mui/material";
 import Allinonecard from './AllInOneCard';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     typography: {
@@ -36,13 +37,13 @@ const theme = createTheme({
 
 const fetchNewsData = async () => {
     try {
-        const topNewsResponse = await fetch('https://vitruvianshield.com/api/v1/top-news');
+        const topNewsResponse = await fetch(`${apiUrl}/api/v1/top-news`);
         const topNewsData = await topNewsResponse.json();
 
-        const latestNewsResponse = await fetch('https://vitruvianshield.com/api/v1/news');
+        const latestNewsResponse = await fetch(`${apiUrl}/api/v1/news`);
         const latestNewsData = await latestNewsResponse.json();
 
-        const eventsNewsResponse = await fetch('https://vitruvianshield.com/api/v1/event-news');
+        const eventsNewsResponse = await fetch(`${apiUrl}/api/v1/event-news`);
         const eventsNewsData = await eventsNewsResponse.json();
 
         return [

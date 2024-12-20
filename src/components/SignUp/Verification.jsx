@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, TextField, Typography, Button, Link, ThemeProvider, createTheme, Snackbar, Alert } from '@mui/material';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
     palette: {
@@ -57,7 +58,7 @@ const EmailVerification = ({ email, password, onSubmit, onResend, onBack }) => {
 
     const loginAgain = async (email, password) => {
         try {
-            const loginResponse = await fetch('https://vitruvianshield.com/api/v1/token/', {
+            const loginResponse = await fetch(`${apiUrl}/api/v1/token/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -168,7 +169,7 @@ const EmailVerification = ({ email, password, onSubmit, onResend, onBack }) => {
     const handleSubmit = async () => {
         if (code.length === 6) {
             try {
-                const response = await fetch('https://vitruvianshield.com/api/v1/verify-email/', {
+                const response = await fetch(`${apiUrl}/api/v1/verify-email/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

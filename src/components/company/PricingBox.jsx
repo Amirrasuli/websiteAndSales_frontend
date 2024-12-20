@@ -15,6 +15,7 @@ import { useAuth } from "../../AuthContext.jsx";
 import { Close as CloseIcon } from "@mui/icons-material";
 import axios from "axios";
 import SignUpDialog from '../SignUp/LogInDialog.jsx';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 // Custom MUI theme for typography
 const theme = createTheme({
@@ -122,7 +123,7 @@ const PricingBox = () => {
     useEffect(() => {
         const fetchLabelsRPM = async () => {
             try {
-                const response = await axios.get('https://vitruvianshield.com/api/v1/rpm-features');
+                const response = await axios.get(`${apiUrl}/api/v1/rpm-features`);
                 const labels = response.data;
                 setLabelsRPM(labels);
             } catch (error) {
@@ -138,7 +139,7 @@ const PricingBox = () => {
     useEffect(() => {
         const fetchLabelsCTMS = async () => {
             try {
-                const response = await axios.get('https://vitruvianshield.com/api/v1/ctms-features');
+                const response = await axios.get(`${apiUrl}/api/v1/ctms-features`);
                 const labels = response.data;
                 setLabelsCTMS(labels);
             } catch (error) {
@@ -187,7 +188,7 @@ const PricingBox = () => {
         };
         if (authToken) {
             try {
-                await axios.post("https://vitruvianshield.com/api/v1/ctms-feature-req", payload, {
+                await axios.post(`${apiUrl}/api/v1/ctms-feature-req`, payload, {
                     headers: {
                         Authorization: `Bearer ${Token}`,
                     },
@@ -216,7 +217,7 @@ const PricingBox = () => {
         };
         if (authToken) {
             try {
-                await axios.post("https://vitruvianshield.com/api/v1/rpm-feature-req", payload, {
+                await axios.post(`${apiUrl}/api/v1/rpm-feature-req`, payload, {
                     headers: {
                         Authorization: `Bearer ${Token}`,
                     },
@@ -248,6 +249,7 @@ const PricingBox = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: '100%',
+                    height:'auto',
                     backgroundImage: `linear-gradient(180deg, rgba(31, 31, 31, 0.9) 0%, rgba(31, 31, 31, 0.72) 100%), url(${pricingBG})`,
                     backgroundSize: 'cover',
                 }}
@@ -281,7 +283,6 @@ const PricingBox = () => {
                 <Box
                     sx={{
                         gap: { xs:'24px',sm: 5, md: 5 },
-                        width: '848px',
                         justifyContent: 'center',
                         alignItems: 'center',
                         mt:2,
@@ -300,7 +301,6 @@ const PricingBox = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             border: '1px solid #FFFFFF33',
-                            flex: '1 1',
                             width: { sm: '296px', md: '350px', lg: '380px', xl: '404px' },
                             height: { sm: '469px', md: '530px', lg: '560px', xl: '581px' },
                         }}
@@ -463,7 +463,6 @@ const PricingBox = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             border: '1px solid #FFFFFF33',
-                            flex: '1 1',
                             width: { sm: '296px', md: '350px', lg: '380px', xl: '404px' },
                             height: { sm: '469px', md: '530px', lg: '560px', xl: '581px' },
                         }}
