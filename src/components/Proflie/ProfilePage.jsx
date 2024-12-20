@@ -102,9 +102,7 @@
         useEffect(() => {
             const fetchUserData = async () => {
                 try {
-                    const { data } = await axios.get(
-                        `${apiUrl}/api/v1/user/settings`,
-                        { headers: { 'Authorization': `Bearer ${Token}` } }
+                    const { data } = await axios.get(`${apiUrl}/api/v1/user/settings`, { headers: { 'Authorization': `Bearer ${Token}` } }
                     );
 
                     console.log(data.picture);

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { createTheme } from '@mui/material/styles';
 import FormInput from '../custom/FormInput';
 import GoogleSignInButton from './GoogleSignInButton';
+import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const theme = createTheme({
@@ -71,6 +72,7 @@ const AuthForm = ({ email: initialEmail = null, onForgotPassword, onLoginSuccess
                     const loginData = await loginResponse.json();
                     localStorage.setItem('authToken', loginData.access);
                     localStorage.setItem('refreshToken', loginData.refresh);
+                    localStorage.setItem('role', loginData.role)
                     onLoginSuccess();
                     showSnackbar('Login successful!', 'success');
                 } else if (loginResponse.status === 202) {
